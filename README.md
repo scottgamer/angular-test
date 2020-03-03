@@ -92,3 +92,87 @@ import { FormsModule } from "@angular/forms";
 ```
 
 ---
+
+## Directives
+
+- Instructions in the DOM
+- Can be used as element attributes
+
+### NgIf
+
+- Displays an element if a condition is met
+- It's an structural directive
+
+```html
+<p *ngIf="serverCreated">Server was created, server name is {{ serverName }}</p>
+```
+
+```typescript
+this.serverCreated = false;
+
+onCreateServer() {
+    this.serverCreated = true;
+    this.serverCreationStatus = `Server was created! Name is ${this.serverName}`;
+  }
+```
+
+- It is possbile to use if-else
+
+```html
+<p *ngIf="serverCreated; else noServer">
+  Server was created, server name is {{ serverName }}
+</p>
+<ng-template #noServer><p>No server was created</p></ng-template>
+```
+
+### NgStyle
+
+- Allows to dynamicaly assign an style
+- It's an attribute directive
+- Can be bound to element attributes
+
+```html
+<p [ngStyle]="{color: getColor()}">
+  {{ "Server" }} with ID {{ serverId }} is {{ getServerStatus() }}
+</p>
+```
+
+```typescript
+getColor() {
+    return this.serverStatus === "online" ? "green" : "red";
+  }
+```
+
+### NgClass
+
+- Allows to dynamicaly add or remove classes
+
+```html
+<p
+  [ngStyle]="{ color: getColor() }"
+  [ngClass]="{ online: serverStatus === 'online' }"
+>
+  {{ "Server" }} with ID {{ serverId }} is {{ getServerStatus() }}
+</p>
+```
+
+```typescript
+@Component({
+  styles: [
+    `
+      .online {
+        color: white;
+      }
+    `
+  ]
+})
+export class ServerComponent {
+  serverStatus: string = "offline";
+
+  constructor() {
+    this.serverStatus = Math.random() > 0.5 ? "online" : "offline";
+  }
+}
+```
+
+---
