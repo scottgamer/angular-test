@@ -98,6 +98,16 @@ import { FormsModule } from "@angular/forms";
 - Instructions in the DOM
 - Can be used as element attributes
 
+### Attribute Directives
+
+- Look like a normal HTML attribute (possibly with databindings or event bindings)
+- Only affect/change the element they are added to
+
+### Structural Directives
+
+- Look like a normal HTML attribute, but have a leading \* (for desugaring)
+- Affect a whole area in the DOM (elements get added/removed)
+
 ### NgIf
 
 - Displays an element if a condition is met
@@ -123,6 +133,19 @@ onCreateServer() {
   Server was created, server name is {{ serverName }}
 </p>
 <ng-template #noServer><p>No server was created</p></ng-template>
+```
+
+### NgSwitch
+
+- Works as a swicth-case statement
+
+```html
+<div [ngSwitch]="value">
+  <p *ngSwitchCase="5">Value is 5</p>
+  <p *ngSwitchCase="10">Value is 10</p>
+  <p *ngSwitchCase="100">Value is 100</p>
+  <p *ngSwitchDefault>Value is Default</p>
+</div>
 ```
 
 ### NgStyle
@@ -187,6 +210,22 @@ export class ServerComponent {
 - ngAfterViewInit: called after the component's view (and child views) has been initialized
 - ngAfterViewChecked: called every time the view (and child views) have been checked
 - ngOnDestroy: called once the component is about to be destroyed
+
+---
+
+```html
+<!-- parent recipe-list.component passing data to child recipe.component -->
+<app-recipe-item
+  *ngFor="let recipe of recipes"
+  [recipe]="recipe"
+></app-recipe-item>
+```
+
+```typescript
+// receive data as @Input decorator
+...
+@Input() recipe: Recipe;
+```
 
 ---
 
